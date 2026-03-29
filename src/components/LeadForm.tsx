@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle, Lock, Phone } from "lucide-react";
+import { CalendarDays, CheckCircle, Lock, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { assignedAgent } from "@/config/agent";
+import { CALCOM_LINK, CALCOM_NAMESPACE, calcomButtonConfig } from "@/config/calcom";
 import { cn } from "@/lib/utils";
 
 const ageOptions = Array.from({ length: 36 }, (_, i) => 40 + i);
@@ -101,14 +102,28 @@ const LeadForm = ({ id }: LeadFormProps) => {
                     </span>
                   </p>
                   <p className="text-sm text-muted-foreground pt-1">
-                    Questions before we reach out? Call me directly:
+                    Prefer to talk now or choose a time? Call me directly or book a qualification call on my calendar:
                   </p>
-                  <Button variant="cta" size="lg" className="w-full sm:w-auto rounded-lg gap-2" asChild>
-                    <a href={`tel:${assignedAgent.phoneTel}`}>
-                      <Phone className="w-5 h-5" />
-                      Call now — {assignedAgent.phoneDisplay}
-                    </a>
-                  </Button>
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-1">
+                    <Button variant="cta" size="lg" className="w-full sm:w-auto rounded-lg gap-2 shrink-0" asChild>
+                      <a href={`tel:${assignedAgent.phoneTel}`}>
+                        <Phone className="w-5 h-5" />
+                        Call now — {assignedAgent.phoneDisplay}
+                      </a>
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="lg"
+                      className="w-full sm:w-auto rounded-lg gap-2 border-primary/40 font-semibold text-primary hover:bg-primary/10 hover:text-primary"
+                      data-cal-namespace={CALCOM_NAMESPACE}
+                      data-cal-link={CALCOM_LINK}
+                      data-cal-config={calcomButtonConfig}
+                    >
+                      <CalendarDays className="w-5 h-5" />
+                      Book an appointment now
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
