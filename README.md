@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Second Chance Life
 
-TODO: Document your project here
+Vite + React + TypeScript application. Run `npm install`, then `npm run dev`.

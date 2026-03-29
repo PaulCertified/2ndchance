@@ -1,4 +1,6 @@
 import { useCallback } from "react";
+import { HOME_DESCRIPTION, HOME_TITLE } from "@/config/siteSeo";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import HeroSection from "@/components/HeroSection";
 import ConditionSection from "@/components/ConditionSection";
 import MedicationSection from "@/components/MedicationSection";
@@ -8,8 +10,11 @@ import LeadForm from "@/components/LeadForm";
 import UrgencySection from "@/components/UrgencySection";
 import FloatingCTA from "@/components/FloatingCTA";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
+import SiteFooter from "@/components/SiteFooter";
 
 const Index = () => {
+  useDocumentMeta({ title: HOME_TITLE, description: HOME_DESCRIPTION });
+
   const scrollToForm = useCallback(() => {
     document.getElementById("lead-form")?.scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -24,13 +29,7 @@ const Index = () => {
       <LeadForm id="lead-form" />
       <UrgencySection onCTAClick={scrollToForm} />
 
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-border">
-        <div className="container max-w-5xl mx-auto text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} All rights reserved. This is not a guarantee of coverage.</p>
-          <p className="mt-1">Consult a licensed agent for details about eligibility and terms.</p>
-        </div>
-      </footer>
+      <SiteFooter />
 
       <FloatingCTA onClick={scrollToForm} />
       <ExitIntentPopup onCTAClick={scrollToForm} />
