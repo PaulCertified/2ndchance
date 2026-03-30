@@ -6,6 +6,7 @@ import { CalendarDays, CheckCircle, Lock, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { assignedAgent } from "@/config/agent";
 import { CALCOM_LINK, CALCOM_NAMESPACE, calcomButtonConfig } from "@/config/calcom";
+import { getFormspreeEndpoint } from "@/config/formspree";
 import { cn } from "@/lib/utils";
 
 const ageOptions = Array.from({ length: 36 }, (_, i) => 40 + i);
@@ -26,6 +27,7 @@ interface LeadFormProps {
 
 const LeadForm = ({ id }: LeadFormProps) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -40,16 +42,62 @@ const LeadForm = ({ id }: LeadFormProps) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.firstName || !form.lastName || !form.phone || !form.email || !form.age || !form.condition) {
       toast.error("Please fill in all required fields.");
       return;
     }
-    // In production, send to backend
-    console.log("Lead submitted:", form);
-    setSubmitted(true);
-    toast.success("Thank you! A licensed agent will reach out soon.");
+
+    const endpoint = getFormspreeEndpoint();
+    if (!endpoint) {
+      toast.error("Form is not set up yet. Please call the number on this page or try again later.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        name: `${form.firstName} ${form.lastName}`.trim(),
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        phone: form.phone,
+        age: form.age,
+        condition: form.condition,
+        medications: form.medications.trim() || "(none listed)",
+        _subject: `Second Chance Life lead — ${form.condition} — ${form.firstName} ${form.lastName}`,
+        pageUrl: typeof window !== "undefined" ? window.location.href : "",
+        submittedAt: new Date().toISOString(),
+      };
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        errors?: Record<string, string>;
+      };
+
+      if (!res.ok) {
+        const fieldErrors = data.errors ? Object.values(data.errors).join(" ") : "";
+        throw new Error(fieldErrors || data.error || `Could not send (${res.status}). Try again or call us.`);
+      }
+
+      setSubmitted(true);
+      toast.success("Thank you! A licensed agent will reach out soon.");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Something went wrong. Please try again or call us.";
+      toast.error(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -238,9 +286,10 @@ const LeadForm = ({ id }: LeadFormProps) => {
               variant="cta"
               size="lg"
               type="submit"
-              className="w-full text-base sm:text-lg py-5 sm:py-6 rounded-lg mt-2 min-h-12 h-auto whitespace-normal leading-snug"
+              disabled={isSubmitting}
+              className="w-full text-base sm:text-lg py-5 sm:py-6 rounded-lg mt-2 min-h-12 h-auto whitespace-normal leading-snug disabled:opacity-70"
             >
-              Request contact from a licensed agent
+              {isSubmitting ? "Sending…" : "Request contact from a licensed agent"}
             </Button>
 
             <p className="text-xs text-muted-foreground text-center mt-3 flex items-start justify-center gap-2 max-w-md mx-auto text-pretty px-1">
