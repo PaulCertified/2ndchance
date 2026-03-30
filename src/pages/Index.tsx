@@ -20,7 +20,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background w-full overflow-x-hidden pb-24 md:pb-0">
       <HeroSection onCTAClick={scrollToForm} />
       <ConditionSection />
       <MedicationSection />

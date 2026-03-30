@@ -29,7 +29,7 @@ interface BlogArticleBodyProps {
 }
 
 const BlogArticleBody = ({ markdown }: BlogArticleBodyProps) => (
-  <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground prose-ul:my-4 prose-ol:my-4">
+  <div className="prose prose-lg max-w-none min-w-0 prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-p:break-words prose-li:text-muted-foreground prose-strong:text-foreground prose-ul:my-4 prose-ol:my-4 prose-pre:overflow-x-auto prose-img:max-w-full">
     <Markdown components={markdownComponents}>{markdown}</Markdown>
   </div>
 );

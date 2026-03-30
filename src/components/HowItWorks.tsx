@@ -22,23 +22,25 @@ const steps = [
 ];
 
 const HowItWorks = () => (
-  <section className="py-16 md:py-20 px-4">
-    <div className="container max-w-5xl mx-auto text-center">
-      <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-12">
+  <section className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 overflow-x-hidden">
+    <div className="container max-w-5xl mx-auto text-center w-full min-w-0">
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-foreground mb-8 sm:mb-12 text-balance px-1">
         How It Works
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-8">
         {steps.map(({ icon: Icon, step, title, desc }) => (
-          <div key={step} className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-full hero-gradient flex items-center justify-center mb-4 shadow-lg">
-              <Icon className="w-8 h-8 text-primary-foreground" />
+          <div key={step} className="flex flex-col items-center max-w-sm mx-auto w-full min-w-0 px-1">
+            <div className="relative mb-6">
+              <div className="w-16 h-16 rounded-full hero-gradient flex items-center justify-center shadow-lg">
+                <Icon className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-sm shadow z-10 border-2 border-background">
+                {step}
+              </div>
             </div>
-            <div className="w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-sm -mt-8 ml-12 relative z-10 shadow">
-              {step}
-            </div>
-            <h3 className="font-heading font-bold text-lg text-foreground mt-2 mb-2">{title}</h3>
-            <p className="text-muted-foreground leading-relaxed">{desc}</p>
+            <h3 className="font-heading font-bold text-base sm:text-lg text-foreground mb-2 text-balance">{title}</h3>
+            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base text-pretty">{desc}</p>
           </div>
         ))}
       </div>

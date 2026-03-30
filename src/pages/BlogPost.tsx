@@ -35,9 +35,9 @@ const BlogPost = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="min-h-screen bg-background flex flex-col w-full overflow-x-hidden">
         <BlogHeader />
-        <main className="flex-1 flex items-center justify-center px-4 py-16">
+        <main className="flex-1 flex items-center justify-center px-3 sm:px-4 py-16 min-w-0">
           <div className="text-center">
             <h1 className="font-heading text-2xl font-bold text-foreground mb-2">Article not found</h1>
             <Link to="/blog" className="text-primary hover:underline">
@@ -54,44 +54,46 @@ const BlogPost = () => {
   const canonical = `${siteUrl}/blog/${post.slug}`;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col w-full overflow-x-hidden">
       <BlogHeader />
-      <main className="flex-1">
-        <article className="container max-w-3xl mx-auto px-4 py-10 md:py-14">
+      <main className="flex-1 min-w-0">
+        <article className="container max-w-3xl mx-auto px-3 sm:px-4 py-8 sm:py-10 md:py-14 w-full min-w-0">
           <Link to="/blog" className="text-sm text-primary hover:underline mb-6 inline-block">
             ← All articles
           </Link>
           <Badge variant="secondary" className="mb-4 font-normal">
             {post.category}
           </Badge>
-          <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">{post.title}</h1>
-          <p className="text-lg text-muted-foreground mb-6 leading-relaxed">{post.description}</p>
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight text-balance break-words">
+            {post.title}
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground mb-6 leading-relaxed text-pretty">{post.description}</p>
           <p className="text-sm text-muted-foreground mb-10">
             <time dateTime={post.publishedAt}>Published {post.publishedAt}</time>
             {" · "}
             <span>Last updated {post.updatedAt}</span>
           </p>
 
-          <div className="rounded-xl bg-primary/5 border border-primary/15 p-6 mb-10">
+          <div className="rounded-xl bg-primary/5 border border-primary/15 p-4 sm:p-6 mb-10 min-w-0">
             <p className="text-foreground font-medium mb-2">See if you may qualify</p>
-            <p className="text-muted-foreground text-sm mb-4">
+            <p className="text-muted-foreground text-sm mb-4 text-pretty">
               Free check—about a minute. A licensed agent will follow up; there is no obligation.
             </p>
-            <Button variant="cta" size="lg" className="rounded-lg" asChild>
+            <Button variant="cta" size="lg" className="rounded-lg w-full sm:w-auto min-h-12 h-auto whitespace-normal" asChild>
               <Link to="/#lead-form">Check eligibility</Link>
             </Button>
           </div>
 
           <BlogArticleBody markdown={post.body} />
 
-          <div className="mt-10 rounded-xl bg-primary/5 border border-primary/15 p-6">
-            <p className="text-foreground font-medium mb-2">Ready for a second opinion on coverage?</p>
-            <Button variant="cta" size="lg" className="rounded-lg mt-2" asChild>
+          <div className="mt-10 rounded-xl bg-primary/5 border border-primary/15 p-4 sm:p-6 min-w-0">
+            <p className="text-foreground font-medium mb-2 text-pretty">Ready for a second opinion on coverage?</p>
+            <Button variant="cta" size="lg" className="rounded-lg mt-2 w-full sm:w-auto min-h-12 h-auto whitespace-normal" asChild>
               <Link to="/#lead-form">Go to the form</Link>
             </Button>
           </div>
 
-          <aside className="mt-12 pt-10 border-t border-border flex flex-col sm:flex-row gap-6 items-start">
+          <aside className="mt-12 pt-10 border-t border-border flex flex-col sm:flex-row gap-6 items-start min-w-0">
             <img
               src={assignedAgent.photoSrc}
               alt={assignedAgent.fullName}

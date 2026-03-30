@@ -54,12 +54,14 @@ const LeadForm = ({ id }: LeadFormProps) => {
 
   if (submitted) {
     return (
-      <section id={id} className="py-16 md:py-20 px-4 section-alt">
-        <div className="container max-w-xl mx-auto text-center">
-          <div className="bg-card rounded-2xl p-8 md:p-10 shadow-lg border border-border">
+      <section id={id} className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 section-alt">
+        <div className="container max-w-xl mx-auto w-full min-w-0 text-center px-0 sm:px-4">
+          <div className="bg-card rounded-2xl p-5 sm:p-8 md:p-10 shadow-lg border border-border w-full min-w-0">
             <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-3">You're All Set!</h2>
-            <p className="text-muted-foreground text-base leading-relaxed max-w-md mx-auto">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 text-balance px-1">
+              You&apos;re All Set!
+            </h2>
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-md mx-auto text-pretty px-1">
               A licensed agent will contact you shortly to review what you shared and walk through coverage options that may fit your health history. There&apos;s no obligation.
             </p>
 
@@ -73,8 +75,8 @@ const LeadForm = ({ id }: LeadFormProps) => {
                 Your assigned agent
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-                <div className="shrink-0">
+              <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 w-full min-w-0">
+                <div className="shrink-0 mx-auto sm:mx-0">
                   <div className="relative">
                     <div className="w-28 h-28 md:w-32 md:h-32 rounded-full hero-gradient p-1 shadow-lg">
                       <img
@@ -89,39 +91,48 @@ const LeadForm = ({ id }: LeadFormProps) => {
                   </div>
                 </div>
 
-                <div className="flex-1 text-center sm:text-left space-y-3">
-                  <h3 className="font-heading text-xl md:text-2xl font-bold text-foreground">{assignedAgent.fullName}</h3>
+                <div className="flex-1 min-w-0 text-center sm:text-left space-y-3 w-full">
+                  <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold text-foreground break-words">
+                    {assignedAgent.fullName}
+                  </h3>
                   <p className="font-body font-semibold text-foreground">{assignedAgent.title}</p>
-                  <p className="text-sm text-muted-foreground flex flex-wrap items-center justify-center sm:justify-start gap-x-2 gap-y-1">
-                    <span className="text-primary" aria-hidden>
+                  <p className="text-xs sm:text-sm text-muted-foreground flex flex-wrap items-center justify-center sm:justify-start gap-x-2 gap-y-1 text-pretty">
+                    <span className="text-primary shrink-0" aria-hidden>
                       •
                     </span>
-                    <span>
+                    <span className="min-w-0">
                       National Producer Number (NPN):{" "}
                       <span className="font-medium text-foreground tabular-nums">{assignedAgent.npn}</span>
                     </span>
                   </p>
-                  <p className="text-sm text-muted-foreground pt-1">
+                  <p className="text-sm text-muted-foreground pt-1 text-pretty max-w-prose mx-auto sm:mx-0">
                     Prefer to talk now or choose a time? Call me directly or book a qualification call on my calendar:
                   </p>
-                  <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-1">
-                    <Button variant="cta" size="lg" className="w-full sm:w-auto rounded-lg gap-2 shrink-0" asChild>
-                      <a href={`tel:${assignedAgent.phoneTel}`}>
-                        <Phone className="w-5 h-5" />
-                        Call now — {assignedAgent.phoneDisplay}
+                  <div className="flex flex-col gap-3 pt-1 w-full max-w-md sm:max-w-none mx-auto sm:mx-0">
+                    <Button variant="cta" size="lg" className="w-full rounded-lg min-h-12 h-auto py-3 px-4 whitespace-normal" asChild>
+                      <a href={`tel:${assignedAgent.phoneTel}`} className="inline-flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
+                        <span className="inline-flex items-center gap-2 shrink-0">
+                          <Phone className="w-5 h-5 shrink-0" />
+                          <span>Call now</span>
+                        </span>
+                        <span className="text-sm font-semibold break-all sm:break-words leading-tight opacity-95">
+                          {assignedAgent.phoneDisplay}
+                        </span>
                       </a>
                     </Button>
                     <Button
                       type="button"
                       variant="outline"
                       size="lg"
-                      className="w-full sm:w-auto rounded-lg gap-2 border-primary/40 font-semibold text-primary hover:bg-primary/10 hover:text-primary"
+                      className="w-full rounded-lg min-h-12 h-auto py-3 px-4 border-primary/40 font-semibold text-primary hover:bg-primary/10 hover:text-primary whitespace-normal text-center"
                       data-cal-namespace={CALCOM_NAMESPACE}
                       data-cal-link={CALCOM_LINK}
                       data-cal-config={calcomButtonConfig}
                     >
-                      <CalendarDays className="w-5 h-5" />
-                      Book an appointment now
+                      <span className="inline-flex items-center justify-center gap-2">
+                        <CalendarDays className="w-5 h-5 shrink-0" />
+                        <span className="leading-snug">Book an appointment now</span>
+                      </span>
                     </Button>
                   </div>
                 </div>
@@ -134,10 +145,10 @@ const LeadForm = ({ id }: LeadFormProps) => {
   }
 
   return (
-    <section id={id} className="py-16 md:py-20 px-4 section-alt">
-      <div className="container max-w-lg mx-auto">
-        <div className="bg-card rounded-2xl p-8 md:p-10 shadow-lg border border-border">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground text-center mb-3">
+    <section id={id} className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 section-alt">
+      <div className="container max-w-lg mx-auto w-full min-w-0 px-0 sm:px-4">
+        <div className="bg-card rounded-2xl p-5 sm:p-8 md:p-10 shadow-lg border border-border w-full min-w-0">
+          <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-foreground text-center mb-3 text-balance px-1">
             Talk With a Licensed Agent About Your Options
           </h2>
           <p className="text-muted-foreground text-center text-sm md:text-base leading-relaxed mb-2 max-w-md mx-auto">
@@ -199,14 +210,14 @@ const LeadForm = ({ id }: LeadFormProps) => {
             <div className="pt-2 border-t border-border">
               <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-4">How we&apos;ll reach you</p>
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="min-w-0">
                     <Label htmlFor="firstName">First name *</Label>
-                    <Input name="firstName" id="firstName" value={form.firstName} onChange={handleChange} placeholder="John" />
+                    <Input name="firstName" id="firstName" value={form.firstName} onChange={handleChange} placeholder="John" className="min-w-0" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <Label htmlFor="lastName">Last name *</Label>
-                    <Input name="lastName" id="lastName" value={form.lastName} onChange={handleChange} placeholder="Smith" />
+                    <Input name="lastName" id="lastName" value={form.lastName} onChange={handleChange} placeholder="Smith" className="min-w-0" />
                   </div>
                 </div>
 
@@ -223,13 +234,20 @@ const LeadForm = ({ id }: LeadFormProps) => {
               </div>
             </div>
 
-            <Button variant="cta" size="lg" type="submit" className="w-full text-lg py-6 rounded-lg mt-2">
+            <Button
+              variant="cta"
+              size="lg"
+              type="submit"
+              className="w-full text-base sm:text-lg py-5 sm:py-6 rounded-lg mt-2 min-h-12 h-auto whitespace-normal leading-snug"
+            >
               Request contact from a licensed agent
             </Button>
 
-            <p className="text-xs text-muted-foreground text-center mt-3 flex items-start justify-center gap-2">
+            <p className="text-xs text-muted-foreground text-center mt-3 flex items-start justify-center gap-2 max-w-md mx-auto text-pretty px-1">
               <Lock className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground" aria-hidden />
-              <span>Your information is secure and is only used so a licensed agent can reach you. We never sell your data.</span>
+              <span className="text-left sm:text-center">
+                Your information is secure and is only used so a licensed agent can reach you. We never sell your data.
+              </span>
             </p>
           </form>
         </div>
