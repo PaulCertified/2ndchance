@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import CalComEmbedInit from "./components/CalComEmbedInit.tsx";
+import GoogleAnalyticsRouteTracker from "./components/GoogleAnalyticsRouteTracker.tsx";
 import ScrollToTop from "./components/ScrollToTop.tsx";
 import Index from "./pages/Index.tsx";
 import BlogIndex from "./pages/BlogIndex.tsx";
@@ -19,6 +20,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <CalComEmbedInit />
+        <GoogleAnalyticsRouteTracker />
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
